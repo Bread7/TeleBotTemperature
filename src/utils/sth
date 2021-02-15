@@ -1,0 +1,36 @@
+{
+    message_id: 127,
+    from: {
+      id: 1690049797,
+      is_bot: true,
+      first_name: 'Temp NS Bot',
+      username: 'BreadTempNSBot'
+    },
+    chat: { id: 749728312, first_name: 'ZJ', type: 'private' },
+    date: 1613366079,
+    text: 'Password:'
+  }
+
+  {
+    message_id: 128,
+    from: {
+      id: 749728312,
+      is_bot: false,
+      first_name: 'ZJ',
+      language_code: 'en'
+    },
+    chat: { id: 749728312, first_name: 'ZJ', type: 'private' },
+    date: 1613366081,
+    reply_to_message: {
+      message_id: 127,
+      from: {
+        id: 1690049797,
+        is_bot: true,
+        first_name: 'Temp NS Bot',
+        username: 'BreadTempNSBot'
+      },
+      chat: { id: 749728312, first_name: 'ZJ', type: 'private' },
+      date: 1613366079,
+      text: 'Password:'
+    },
+    text: '123'

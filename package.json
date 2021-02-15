@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "dependencies": {
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "fastify": "^3.11.0",
     "fastify-autoload": "^3.4.2",
@@ -10,13 +11,23 @@
     "fastify-helmet": "^5.2.0",
     "fastify-plugin": "^3.0.0",
     "lodash": "^4.17.20",
+    "middie": "^5.2.0",
     "module-alias": "^2.2.2",
     "moment": "^2.29.1",
+    "node-telegram-bot-api": "^0.51.0",
     "nodemon": "^2.0.7",
     "telegraf": "^4.0.2"
   },
-  "scripts": {},
-  "_moduleAliases": {},
+  "scripts": {
+    "start": "nodemon --exec node ./src/main.js",
+    "start2": "nodemon --exec ./node_modules/.bin/fastify start -l info ./src/main.js",
+    "start3": "nodemon --exec ./node_modules/.bin/fastify start -l info ./src/app.js"
+  },
+  "_moduleAliases": {
+    "@root": ".",
+    "@utils": "src/utils",
+    "@services": "src/services"
+  },
   "author": "Zheng Jie",
   "license": "ISC"
 }

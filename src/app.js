@@ -2,19 +2,28 @@
 require('dotenv').config();
 require('module-alias/register');
 const helmet = require('fastify-helmet');
+const fs = require('fs');
 const autoload = require('fastify-autoload');
+const middie = require('middie');
 const path = require('path');
+const { startBot } = require('@utils/telegram');
 
 // Entry point
 module.exports = function (fastify, opts, next) {
     // Initialize helmet for fastify
     fastify.register(helmet);
 
+    // Initalize middleware
+    fastify.register(middie);
+
     // Register services
     fastify.register(autoload, {
         dir: path.join(__dirname, 'services'),
-        options: Object.assign({}, opts)
+        options: Object.assign({}, opts),
     });
+
+    // Initialize telegram bot
+    startBot();
 
     // Handle unhandledRejection errors
     // https://github.com/mcollina/make-promises-safe

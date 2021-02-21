@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
+    "encodeurl": "^1.0.2",
     "fastify": "^3.11.0",
     "fastify-autoload": "^3.4.2",
     "fastify-cli": "^2.7.0",
@@ -19,9 +20,9 @@
     "telegraf": "^4.0.2"
   },
   "scripts": {
-    "start": "nodemon --exec node ./src/main.js",
+    "start3": "nodemon --exec node ./src/main.js",
     "start2": "nodemon --exec ./node_modules/.bin/fastify start -l info ./src/main.js",
-    "start3": "nodemon --exec ./node_modules/.bin/fastify start -l info ./src/app.js"
+    "start": "nodemon --exec ./node_modules/.bin/fastify start -l info ./src/app.js"
   },
   "_moduleAliases": {
     "@root": ".",

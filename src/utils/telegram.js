@@ -4,11 +4,15 @@ const password = process.env.PASSWORD;
 const TelegramBot = require('node-telegram-bot-api');
 const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 const axios = require('axios');
-
+const encodeUrl = require('encodeurl')
+ 
 // Ban list location
 const banFileLoc = __dirname + '/../../banList'
-
-
+// Regex for sending temperature
+const tempRegex = '///sendtemp///'
+// Data format for sending temperature
+let tempData = {};
+ 
 const startBot = function () {
     bot.onText(/\/start/, (msg) => {
         initialize(msg);
@@ -17,14 +21,14 @@ const startBot = function () {
         
     // })
     bot.on('message', (msg) => {
-        // console.log(msg);
+        console.log(msg);
     })
 };
-
+ 
 const initialize = function (msg) {
     // Check if ban list exists
     existBanList();
-
+ 
     // Ask for pass
     bot.sendMessage(msg.chat.id, 'Password:',  { reply_markup: { force_reply: true }})
         .then((sentMsg) => {
@@ -36,14 +40,30 @@ const initialize = function (msg) {
                 };
                 bot.sendMessage(msg.chat.id, msgTemplate());
             });
-
+ 
     });
 };
-
+ 
 const sendTemp = async function (userInput) {
-
+    // Ensure validation
+    let dataObj = {
+        groupCode: "",
+        date: "",
+        meridies: "",
+        memberId: "",
+        temperature: "36.0",
+        pin: "",
+        
+    }
+    if(!tempMsgValidate(userInput)) {
+        return false;
+    } else {
+        let data = userInput.substring(tempRegex.length + 2)
+    }
+    // Remove regex string
+    
 };
-
+ 
 const existBanList = function () {
     // Check for file
     fs.access(banFileLoc, (err) => {
@@ -61,14 +81,14 @@ const existBanList = function () {
     });
     return;
 }
-
+ 
 const authenticate = function (userPass) {
     if (password != userPass) {
         return false;
     };
     return true;
 };
-
+ 
 const addToBanList = async function(chatId) {
     // Check if ID exists
     if (await banVerification(chatId) === true) {
@@ -84,7 +104,7 @@ const addToBanList = async function(chatId) {
     });
     return;
 };
-
+ 
 const banVerification = async function (chatId) {
     const data = await fsPromises.readFile(banFileLoc, { encoding: 'utf8' });
     if (data.includes(chatId)) {
@@ -105,7 +125,7 @@ const banVerification = async function (chatId) {
     //     return false;
     // });
 };
-
+ 
 const msgTemplate = function () {
     const template = `///sendtemp///
 url: <url>
@@ -113,11 +133,16 @@ pin: <pin>
 temp: <temp>`
     return template;
 };
-
-const tempMsgValidate = function () {
-
+ 
+// Ensure string is validated and returns boolean
+const tempMsgValidate = function (tempMsg) {
+    // Find the specific string at the start of temp msg
+    if (!tempMsg.startsWith(tempRegex)) {
+        return false;
+    }
+    return true;
 }
-
+ 
 module.exports = {
     startBot,
 };
